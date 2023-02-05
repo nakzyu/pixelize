@@ -55,8 +55,8 @@ export const getAvgRGB = (rgbaArr: Uint8ClampedArray) => {
 
   return {
     r: getAvgColorVal(colorSum[0], eachCount),
-    g: getAvgColorVal(colorSum[0], eachCount),
-    b: getAvgColorVal(colorSum[0], eachCount),
+    g: getAvgColorVal(colorSum[1], eachCount),
+    b: getAvgColorVal(colorSum[2], eachCount),
   };
 };
 
