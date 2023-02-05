@@ -52,6 +52,12 @@ export const getAvgRGB = (rgbaArr: Uint8ClampedArray) => {
 
   const getAvgColorVal = (number: number, count: number) =>
     Math.floor(number / count);
+
+  return {
+    r: getAvgColorVal(colorSum[0], eachCount),
+    g: getAvgColorVal(colorSum[0], eachCount),
+    b: getAvgColorVal(colorSum[0], eachCount),
+  };
 };
 
 export const faltten = (
