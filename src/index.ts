@@ -15,6 +15,11 @@ export enum THRESHOLD {
   "TEN",
 }
 
+type Vec2 = {
+  x: number;
+  y: number;
+};
+
 export const getImageDatafromImageSrc = async (
   imgSrc: string
 ): Promise<ImageData> =>
@@ -40,7 +45,7 @@ export const getImageDatafromImageSrc = async (
     };
   });
 
-export const getAvgRGB = (rgbaArr: Uint8ClampedArray) => {
+export const getAvgRGB = (rgbaArr: number[]) => {
   const eachCount = rgbaArr.length / 4;
   const colorSum = rgbaArr.reduce((a, b, i) => {
     if ((i + 1) % 4 === 0) return a;
@@ -66,8 +71,49 @@ export const faltten = (
   t: number
 ) => {};
 
+export const getIndicesIn2DArray = (
+  t: THRESHOLD,
+  x: number,
+  y: number
+): Vec2[] => {
+  const indices: Vec2[] = [];
+  for (x; x < x + t; x++) {
+    for (y; y < y + t; y++) {
+      indices.push({ x, y });
+    }
+  }
+  return indices;
+};
+
+export const divideLinearArrayByThreshold = (
+  t: THRESHOLD,
+  width: number,
+  height: number
+) => {
+  const indices: Vec2[] = [];
+  for (let x = 0; x < width; x += t + 1) {
+    for (let y = 0; y < height; y += t + 1) {
+      indices.push({ x, y });
+    }
+  }
+  return indices;
+};
+
+export const translateVec2IndexIn2DArrayToIndexInLinearArray = (
+  vec2: Vec2,
+  width: number
+) => {
+  return vec2.x + vec2.y * width;
+};
+
+const convertLinearArrayToVec2Arr = (arr: Uint8ClampedArray) => {
+  return;
+};
+
 export const convert = async (imgSrc: string) => {
-  const res = await getImageDatafromImageSrc("/icon_13.png");
-  // const avg = getAvgRGB(res.data);
-  // console.log(avg);
+  const { width, height, data } = await getImageDatafromImageSrc(
+    "/icon_13.png"
+  );
+  const t = THRESHOLD.TWO;
+  const divided = divideLinearArrayByThreshold(t, width, height);
 };
