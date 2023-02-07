@@ -29,7 +29,7 @@ export const getImageDatafromImageSrc = async (
 
     $img.onload = () => {
       const { width, height } = $img;
-      console.log(width, height);
+
       const $canvas = document.createElement("canvas");
       $canvas.width = width;
       $canvas.height = height;
@@ -65,12 +65,6 @@ export const getAvgRGB = (rgbaArr: number[]) => {
   };
 };
 
-export const faltten = (
-  arr: Uint8ClampedArray,
-  //threshold pixel
-  t: number
-) => {};
-
 export const getIndicesIn2DArray = (
   t: THRESHOLD,
   x: number,
@@ -78,8 +72,6 @@ export const getIndicesIn2DArray = (
   width: number,
   height: number
 ): Vec2[] => {
-  const indices: Vec2[] = [];
-
   const localRightEnd = Math.min(x + t + 1, width);
   const localBottomEnd = Math.min(y + t + 1, height);
 
@@ -167,17 +159,15 @@ export const convert = async (imgSrc: string, t: THRESHOLD) => {
     });
   });
 
-  console.log(dataCopied.length);
-  return new ImageData(dataCopied, 100, 100);
+  return new ImageData(dataCopied, width, height);
 };
 
 const drawNew = async (t: THRESHOLD) => {
-  console.log("run");
   const newData = await convert("/icon_13.png", t);
   const $canvas = document.createElement("canvas");
   document.body.appendChild($canvas);
-  $canvas.width = 100;
-  $canvas.height = 100;
+  $canvas.width = newData.width;
+  $canvas.height = newData.height;
   const ctx = $canvas.getContext("2d");
   ctx?.putImageData(newData, 0, 0);
 };
