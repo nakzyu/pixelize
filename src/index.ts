@@ -2,18 +2,6 @@
  * `ONE` => 1x1 square
  * `TWO` => 2x2 square
  */
-export enum THRESHOLD {
-  "ONE",
-  "TWO",
-  "THREE",
-  "FOUR",
-  "FIVE",
-  "SIX",
-  "SEVEN",
-  "EIGHT",
-  "NINE",
-  "TEN",
-}
 
 type Vec2 = {
   x: number;
@@ -66,7 +54,7 @@ export const getAvgRGB = (rgbaArr: number[]) => {
 };
 
 export const getIndicesIn2DArray = (
-  t: THRESHOLD,
+  t: number,
   x: number,
   y: number,
   width: number,
@@ -85,7 +73,7 @@ export const getIndicesIn2DArray = (
 };
 
 export const divideLinearArrayByThreshold = (
-  t: THRESHOLD,
+  t: number,
   width: number,
   height: number
 ) => {
@@ -105,7 +93,7 @@ export const translateVec2IndexIn2DArrayToIndexInLinearArray = (
   return (vec2.x + vec2.y * width) * 4;
 };
 
-export const convert = async (imgSrc: string, t: THRESHOLD) => {
+export const convert = async (imgSrc: string, t: number) => {
   const { width, height, data } = await getImageDatafromImageSrc(imgSrc);
   const sections = divideLinearArrayByThreshold(t, width, height);
 
@@ -162,7 +150,7 @@ export const convert = async (imgSrc: string, t: THRESHOLD) => {
   return new ImageData(dataCopied, width, height);
 };
 
-const drawNew = async (t: THRESHOLD) => {
+const drawNew = async (t: number) => {
   const newData = await convert("/cookie.png", t);
   const $canvas = document.createElement("canvas");
   document.body.appendChild($canvas);
@@ -172,7 +160,7 @@ const drawNew = async (t: THRESHOLD) => {
   ctx?.putImageData(newData, 0, 0);
 };
 
-const arr: [(index: number) => void, number][] = new Array(10)
+const arr: [(index: number) => void, number][] = new Array(20)
   .fill(null)
   .map((_, i) => [drawNew, i]);
 

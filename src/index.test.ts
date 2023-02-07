@@ -1,6 +1,4 @@
 import {
-  faltten,
-  THRESHOLD,
   divideLinearArrayByThreshold,
   translateVec2IndexIn2DArrayToIndexInLinearArray,
 } from ".";
@@ -43,14 +41,10 @@ describe("translate vec2 to linear", () => {
 
 describe("divide", () => {
   it("", () => {
-    expect(divideLinearArrayByThreshold(THRESHOLD.ONE, 100, 100).length).toBe(
-      10000
-    );
+    expect(divideLinearArrayByThreshold(1, 100, 100).length).toBe(10000);
   });
 
   it("", () => {
-    expect(divideLinearArrayByThreshold(THRESHOLD.TWO, 100, 100).length).toBe(
-      2500
-    );
+    expect(divideLinearArrayByThreshold(1, 100, 100).length).toBe(2500);
   });
 });
