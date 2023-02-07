@@ -74,15 +74,22 @@ export const faltten = (
 export const getIndicesIn2DArray = (
   t: THRESHOLD,
   x: number,
-  y: number
+  y: number,
+  width: number,
+  height: number
 ): Vec2[] => {
   const indices: Vec2[] = [];
-  for (x; x < x + t; x++) {
-    for (y; y < y + t; y++) {
-      indices.push({ x, y });
-    }
-  }
-  return indices;
+
+  const localRightEnd = Math.min(x + t + 1, width);
+  const localBottomEnd = Math.min(y + t + 1, height);
+
+  const arr = new Array(localRightEnd - x)
+    .fill(null)
+    .map((_, i) => x + i)
+    .map((x) =>
+      new Array(localBottomEnd - y).fill(null).map((_, i) => ({ x, y: y + i }))
+    );
+  return arr.flat().flat();
 };
 
 export const divideLinearArrayByThreshold = (
@@ -91,8 +98,8 @@ export const divideLinearArrayByThreshold = (
   height: number
 ) => {
   const indices: Vec2[] = [];
-  for (let x = 0; x < width; x += t + 1) {
-    for (let y = 0; y < height; y += t + 1) {
+  for (let y = 0; y < height; y += t + 1) {
+    for (let x = 0; x < width; x += t + 1) {
       indices.push({ x, y });
     }
   }
@@ -103,17 +110,78 @@ export const translateVec2IndexIn2DArrayToIndexInLinearArray = (
   vec2: Vec2,
   width: number
 ) => {
-  return vec2.x + vec2.y * width;
+  return (vec2.x + vec2.y * width) * 4;
 };
 
-const convertLinearArrayToVec2Arr = (arr: Uint8ClampedArray) => {
-  return;
+export const convert = async (imgSrc: string, t: THRESHOLD) => {
+  const { width, height, data } = await getImageDatafromImageSrc(imgSrc);
+  const sections = divideLinearArrayByThreshold(t, width, height);
+
+  const divied2 = sections.map(({ x, y }) => {
+    const indicies = getIndicesIn2DArray(t, x, y, width, height);
+
+    const leng = indicies.length;
+
+    const { r, g, b } = indicies.reduce(
+      (acc, cur) => {
+        const index = translateVec2IndexIn2DArrayToIndexInLinearArray(
+          cur,
+          width
+        );
+        const { r, g, b } = getAvgRGB([
+          data[index],
+          data[index + 1],
+          data[index + 2],
+          data[index + 3],
+        ]);
+
+        acc.r += r;
+        acc.g += g;
+        acc.b += b;
+
+        return acc;
+      },
+      { r: 0, g: 0, b: 0 }
+    );
+
+    return {
+      indicies,
+      r: r / leng,
+      g: g / leng,
+      b: b / leng,
+    };
+  });
+
+  const dataCopied = data.slice();
+
+  divied2.forEach(({ indicies, r, g, b }) => {
+    indicies.forEach((vec2) => {
+      const index = translateVec2IndexIn2DArrayToIndexInLinearArray(
+        vec2,
+        width
+      );
+
+      dataCopied[index] = r;
+      dataCopied[index + 1] = g;
+      dataCopied[index + 2] = b;
+    });
+  });
+
+  console.log(dataCopied.length);
+  return new ImageData(dataCopied, 100, 100);
 };
 
-export const convert = async (imgSrc: string) => {
-  const { width, height, data } = await getImageDatafromImageSrc(
-    "/icon_13.png"
-  );
-  const t = THRESHOLD.TWO;
-  const divided = divideLinearArrayByThreshold(t, width, height);
+const drawNew = async (t: THRESHOLD) => {
+  console.log("run");
+  const newData = await convert("/icon_13.png", t);
+  const $canvas = document.createElement("canvas");
+  document.body.appendChild($canvas);
+  $canvas.width = 100;
+  $canvas.height = 100;
+  const ctx = $canvas.getContext("2d");
+  ctx?.putImageData(newData, 0, 0);
 };
+
+new Array(10).fill(null).forEach((_, i) => {
+  drawNew(i);
+});
