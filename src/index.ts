@@ -163,7 +163,7 @@ export const convert = async (imgSrc: string, t: THRESHOLD) => {
 };
 
 const drawNew = async (t: THRESHOLD) => {
-  const newData = await convert("/icon_13.png", t);
+  const newData = await convert("/cookie.png", t);
   const $canvas = document.createElement("canvas");
   document.body.appendChild($canvas);
   $canvas.width = newData.width;
@@ -172,6 +172,10 @@ const drawNew = async (t: THRESHOLD) => {
   ctx?.putImageData(newData, 0, 0);
 };
 
-new Array(10).fill(null).forEach((_, i) => {
-  drawNew(i);
-});
+const arr: [(index: number) => void, number][] = new Array(10)
+  .fill(null)
+  .map((_, i) => [drawNew, i]);
+
+for await (const [cb, i] of arr) {
+  await cb(i);
+}
