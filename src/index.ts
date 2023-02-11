@@ -1,3 +1,4 @@
+console.log("draw new");
 /*
  * `ONE` => 1x1 square
  * `TWO` => 2x2 square
@@ -140,6 +141,7 @@ export const convert = async (imgSrc: string, t: number) => {
         vec2,
         width
       );
+      console.log("s");
 
       dataCopied[index] = r;
       dataCopied[index + 1] = g;
@@ -151,7 +153,9 @@ export const convert = async (imgSrc: string, t: number) => {
 };
 
 const drawNew = async (t: number) => {
+  console.log("draw!");
   const newData = await convert("/cookie.png", t);
+  console.log("im here");
   const $canvas = document.createElement("canvas");
   document.body.appendChild($canvas);
   $canvas.width = newData.width;
@@ -160,10 +164,18 @@ const drawNew = async (t: number) => {
   ctx?.putImageData(newData, 0, 0);
 };
 
-const arr: [(index: number) => void, number][] = new Array(20)
-  .fill(null)
-  .map((_, i) => [drawNew, i]);
-
-for await (const [cb, i] of arr) {
-  await cb(i);
+if (document) {
+  console.log("readdocument");
+  drawNew(1);
+  // document.getElementById("create").onclick = () => {
+  //   const textbox = document.getElementById("count");
+  //   const count = parseInt(textbox.value, 10);
+  //   parent.postMessage(
+  //     { pluginMessage: { type: "create-rectangles", count } },
+  //     "*"
+  //   );
+  // };
+  // document.getElementById("cancel").onclick = () => {
+  //   parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
+  // };
 }
