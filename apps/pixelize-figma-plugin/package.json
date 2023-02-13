@@ -1,0 +1,22 @@
+{
+  "name": "pixelize-figma-plugin",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "test": "vitest",
+    "build": "vite build",
+    "lint": "tsc",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.58.0",
+    "typescript": "^4.9.3",
+    "vite": "^4.1.0",
+    "vite-plugin-singlefile": "^0.13.2",
+    "vitest": "^0.28.4"
+  },
+  "dependencies": {},
+  "license": "MIT"
+}

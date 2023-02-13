@@ -1,7 +1,7 @@
 import {
   divideLinearArrayByThreshold,
   translateVec2IndexIn2DArrayToIndexInLinearArray,
-} from ".";
+} from "./pixelize";
 import { describe, expect, it } from "vitest";
 
 // describe("flatten 2x2 image by threshold 1", () => {

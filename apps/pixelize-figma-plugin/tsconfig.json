@@ -16,9 +16,6 @@
     "noImplicitReturns": true,
     "skipLibCheck": true
   },
-  "buildOptions": {
-    "outDir": "dist"
-  },
-  "include": ["src"],
+  "include": ["src", "src/index.ts", "index.js"],
   "exclude": ["**/*.spec.ts", "**/*.spec.tsx", "**/*.test.ts", "**/*.test.tsx"]
 }
