@@ -1,6 +1,5 @@
 {
   "name": "pixelize-figma-plugin",
-  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -17,6 +16,8 @@
     "vite-plugin-singlefile": "^0.13.2",
     "vitest": "^0.28.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "pixelize": "*"
+  },
   "license": "MIT"
 }
