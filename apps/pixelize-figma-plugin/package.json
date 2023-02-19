@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 6173",
     "test": "vitest",
     "build": "vite build",
     "lint": "tsc",

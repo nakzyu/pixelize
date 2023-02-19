@@ -12,6 +12,7 @@
     "lint": {},
     "deploy": {
       "dependsOn": ["build", "test", "lint"]
-    }
+    },
+    "dev": {}
   }
 }

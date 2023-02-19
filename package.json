@@ -3,5 +3,7 @@
   "workspaces": [
     "packages/*",
     "apps/*"
-  ]
+  ],
+  "private": true,
+  "license": "MIT"
 }
