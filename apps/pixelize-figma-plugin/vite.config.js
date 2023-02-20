@@ -21,28 +21,24 @@ export default defineConfig({
     {
       name: "replace-script-inline",
       closeBundle: () => {
-        const script = fs.readFileSync(
-          "./dist/assets/ui.js",
-          "utf8",
-          (_, data) => {
-            return data;
-          }
-        );
+        const uiScriptPath = "./dist/assets/ui.js";
+        const uiHtmlPath = "./dist/ui/index.html";
 
-        const html = fs.readFileSync(
-          "./dist/ui/index.html",
-          "utf8",
-          (_, data) => {
-            return data;
-          }
-        );
+        const script = fs.readFileSync(uiScriptPath, "utf8", (_, data) => {
+          return data;
+        });
+
+        const html = fs.readFileSync(uiHtmlPath, "utf8", (_, data) => {
+          return data;
+        });
 
         const replaced = html.replace(
           `<script type="module" crossorigin src="/assets/ui.js"></script>`,
           `<script>${script}</script>`
         );
 
-        fs.writeFileSync("./dist/ui/index.html", replaced, "utf8");
+        fs.writeFileSync(uiHtmlPath, replaced, "utf8");
+        fs.rmSync(uiScriptPath);
       },
     },
   ],
