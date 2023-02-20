@@ -2,7 +2,7 @@
   "name": "pixelize",
   "id": "1205503346945146498",
   "api": "1.0.0",
-  "main": "index.js",
   "editorType": ["figma"],
+  "main": "dist/assets/main.js",
   "ui": "dist/index.html"
 }

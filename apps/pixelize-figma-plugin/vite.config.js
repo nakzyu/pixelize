@@ -7,7 +7,7 @@ export default defineConfig({
     outDir: "dist",
     rollupOptions: {
       input: {
-        figma: "lib/figma.ts",
+        main: "lib/figma.ts",
         ui: "ui/index.html",
       },
       output: {
