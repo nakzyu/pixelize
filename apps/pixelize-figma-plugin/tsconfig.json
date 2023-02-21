@@ -3,7 +3,11 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "typeRoots": ["./node_modules/@types", "./node_modules/@figma"],
+    "typeRoots": [
+      "../../node_modules/@types",
+      "../../node_modules/@figma",
+      "../../node_modules/@figma/plugin-typings"
+    ],
     "lib": ["ESNext", "DOM"],
     "moduleResolution": "Node",
     "strict": true,

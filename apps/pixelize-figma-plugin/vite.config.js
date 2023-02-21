@@ -32,10 +32,11 @@ export default defineConfig({
           return data;
         });
 
-        const replaced = html.replace(
-          `<script type="module" crossorigin src="/assets/ui.js"></script>`,
-          `<script>${script}</script>`
-        );
+        const replaced =
+          html.replace(
+            `<script type="module" crossorigin src="/assets/ui.js"></script>`,
+            ""
+          ) + `<script>${script}</script>`;
 
         fs.writeFileSync(uiHtmlPath, replaced, "utf8");
         fs.rmSync(uiScriptPath);
