@@ -94,8 +94,28 @@ export const translateVec2IndexIn2DArrayToIndexInLinearArray = (
   return (vec2.x + vec2.y * width) * 4;
 };
 
-export const convert = async (imgSrc: string, t: number) => {
-  const { width, height, data } = await getImageDatafromImageSrc(imgSrc);
+export const convert = async (
+  imgSrc: string | { pixels: Uint8ClampedArray; width: number; height: number },
+  t: number
+) => {
+  let width: number, height: number, data: Uint8ClampedArray;
+
+  if (typeof imgSrc === "string") {
+    const {
+      width: rW,
+      height: rH,
+      data: rD,
+    } = await getImageDatafromImageSrc(imgSrc);
+
+    width = rW;
+    height = rH;
+    data = rD;
+  } else {
+    width = imgSrc.width;
+    height = imgSrc.height;
+    data = imgSrc.pixels as unknown as Uint8ClampedArray;
+  }
+
   const sections = divideLinearArrayByThreshold(t, width, height);
 
   const divied2 = sections.map(({ x, y }) => {
@@ -141,7 +161,6 @@ export const convert = async (imgSrc: string, t: number) => {
         vec2,
         width
       );
-      console.log("s");
 
       dataCopied[index] = r;
       dataCopied[index + 1] = g;
@@ -165,7 +184,6 @@ const drawNew = async (t: number) => {
 };
 
 if (document) {
-  console.log("readdocument");
   drawNew(1);
   // document.getElementById("create").onclick = () => {
   //   const textbox = document.getElementById("count");

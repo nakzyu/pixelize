@@ -20,6 +20,5 @@
     "noImplicitReturns": true,
     "skipLibCheck": true
   },
-  "include": ["ui/index.ts", "lib/figma.ts"],
-  "exclude": ["**/*.spec.ts", "**/*.spec.tsx", "**/*.test.ts", "**/*.test.tsx"]
+  "include": ["ui/index.ts", "lib/figma.ts"]
 }
