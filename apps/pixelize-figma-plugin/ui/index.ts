@@ -1,12 +1,12 @@
 import { convert } from "pixelize";
 
-async function encode(
+function encode(
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D,
   imageData: ImageData
 ): Promise<Uint8Array> {
   ctx.putImageData(imageData, 0, 0);
-  return await new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     canvas.toBlob((blob) => {
       const reader = new FileReader();
       reader.onload = () => {
@@ -70,7 +70,6 @@ export default (() =>
           10
         );
         const newBytes = await encode(canvas, ctx, converted);
-        console.log(newBytes, "new");
         window.parent.postMessage({ pluginMessage: newBytes }, "*");
       }
     };

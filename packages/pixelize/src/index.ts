@@ -172,9 +172,7 @@ export const convert = async (
 };
 
 const drawNew = async (t: number) => {
-  console.log("draw!");
   const newData = await convert("/cookie.png", t);
-  console.log("im here");
   const $canvas = document.createElement("canvas");
   document.body.appendChild($canvas);
   $canvas.width = newData.width;
@@ -182,18 +180,3 @@ const drawNew = async (t: number) => {
   const ctx = $canvas.getContext("2d");
   ctx?.putImageData(newData, 0, 0);
 };
-
-if (document) {
-  drawNew(1);
-  // document.getElementById("create").onclick = () => {
-  //   const textbox = document.getElementById("count");
-  //   const count = parseInt(textbox.value, 10);
-  //   parent.postMessage(
-  //     { pluginMessage: { type: "create-rectangles", count } },
-  //     "*"
-  //   );
-  // };
-  // document.getElementById("cancel").onclick = () => {
-  //   parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
-  // };
-}

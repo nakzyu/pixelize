@@ -25,7 +25,6 @@ async function invertImages(node: GeometryMixin) {
       // Create a new paint for the new image.
       const newPaint = JSON.parse(JSON.stringify(paint));
       newPaint.imageHash = figma.createImage(newBytes).hash;
-      console.log("push!!");
       newFills.push(newPaint);
     }
   }
