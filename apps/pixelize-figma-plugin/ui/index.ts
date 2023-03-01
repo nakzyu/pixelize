@@ -22,8 +22,6 @@ function encode(
   });
 }
 
-// Decoding an image can be done by sticking it in an HTML
-// canvas, as we can read individual pixels off the canvas.
 async function decode(
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D,
@@ -44,33 +42,32 @@ async function decode(
   return imageData;
 }
 
-export default (() =>
-  // Create an event handler to receive messages from the main
-  // thread.
-  {
-    window.onmessage = async (event) => {
-      // Just get the bytes directly from the pluginMessage since
-      // that's the only type of message we'll receive in this
-      // plugin. In more complex plugins, you'll want to check the
-      // type of the message.
-      const bytes = event.data.pluginMessage;
+export default (() => {
+  const $slider = document.querySelector("#slider");
+  $slider?.addEventListener("change", () => {
+    // trigger re-render on change
+    window.parent.postMessage({ pluginMessage: {} }, "*");
+  });
 
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
+  window.onmessage = async (event) => {
+    const bytes = event.data.pluginMessage;
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      const imageData = await decode(canvas, ctx, bytes);
 
-      if (ctx) {
-        const imageData = await decode(canvas, ctx, bytes);
-
-        const converted = await convert(
-          {
-            pixels: imageData.data,
-            width: imageData.width,
-            height: imageData.height,
-          },
-          10
-        );
-        const newBytes = await encode(canvas, ctx, converted);
-        window.parent.postMessage({ pluginMessage: newBytes }, "*");
-      }
-    };
-  })();
+      const converted = await convert(
+        {
+          pixels: imageData.data,
+          width: imageData.width,
+          height: imageData.height,
+        },
+        Number(
+          (document.querySelector("#slider") as HTMLInputElement)?.value
+        ) ?? 1
+      );
+      const newBytes = await encode(canvas, ctx, converted);
+      window.parent.postMessage({ pluginMessage: newBytes }, "*");
+    }
+  };
+})();

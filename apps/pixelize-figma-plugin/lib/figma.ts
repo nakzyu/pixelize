@@ -3,36 +3,36 @@ async function invertImages(node: GeometryMixin) {
   if (!node.fills) return;
   for (const paint of node.fills as Paint[]) {
     if (paint.type === "IMAGE") {
-      // Get the (encoded) bytes for this image.
       if (paint.imageHash === null) return;
       const image = figma.getImageByHash(paint.imageHash);
+
       if (!image) return;
       const bytes = await image.getBytesAsync();
 
-      // Create an invisible iframe to act as a "worker" which
-      // will do the task of decoding and send us a message
-      // when it's done.
-      figma.showUI(__html__, { visible: false });
+      const newPaint = JSON.parse(JSON.stringify(paint));
 
-      // Send the raw bytes of the file to the worker.
       figma.ui.postMessage(bytes);
 
-      // Wait for the worker's response.
-      const newBytes: Uint8Array = await new Promise((resolve, reject) => {
-        figma.ui.onmessage = (value) => resolve(value);
+      const newBytes: Uint8Array = await new Promise((resolve) => {
+        const initialOnmessageInstance = figma.ui.onmessage;
+        figma.ui.onmessage = (value) => {
+          figma.ui.onmessage = initialOnmessageInstance;
+          resolve(value);
+        };
       });
 
-      // Create a new paint for the new image.
-      const newPaint = JSON.parse(JSON.stringify(paint));
       newPaint.imageHash = figma.createImage(newBytes).hash;
       newFills.push(newPaint);
     }
   }
   node.fills = newFills;
-  figma.closePlugin();
 }
 
-const selected = figma.currentPage.selection[0] as GeometryMixin;
-invertImages(selected);
+export default (() => {
+  figma.showUI(__html__, { visible: true });
 
-export default {};
+  figma.ui.onmessage = async () => {
+    const selected = figma.currentPage.selection[0] as GeometryMixin;
+    invertImages(selected);
+  };
+})();

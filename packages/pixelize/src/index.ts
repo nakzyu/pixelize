@@ -1,9 +1,3 @@
-console.log("draw new");
-/*
- * `ONE` => 1x1 square
- * `TWO` => 2x2 square
- */
-
 type Vec2 = {
   x: number;
   y: number;
@@ -171,12 +165,12 @@ export const convert = async (
   return new ImageData(dataCopied, width, height);
 };
 
-const drawNew = async (t: number) => {
-  const newData = await convert("/cookie.png", t);
-  const $canvas = document.createElement("canvas");
-  document.body.appendChild($canvas);
-  $canvas.width = newData.width;
-  $canvas.height = newData.height;
-  const ctx = $canvas.getContext("2d");
-  ctx?.putImageData(newData, 0, 0);
-};
+// const drawNew = async (t: number) => {
+//   const newData = await convert("/cookie.png", t);
+//   const $canvas = document.createElement("canvas");
+//   document.body.appendChild($canvas);
+//   $canvas.width = newData.width;
+//   $canvas.height = newData.height;
+//   const ctx = $canvas.getContext("2d");
+//   ctx?.putImageData(newData, 0, 0);
+// };
