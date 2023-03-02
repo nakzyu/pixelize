@@ -30,9 +30,15 @@ async function invertImages(node: GeometryMixin) {
 
 export default (() => {
   figma.showUI(__html__, { visible: true });
-
-  figma.ui.onmessage = async () => {
-    const selected = figma.currentPage.selection[0] as GeometryMixin;
-    invertImages(selected);
+  figma.ui.onmessage = async (msg) => {
+    if (msg.revert === true) {
+      figma.triggerUndo();
+    } else {
+      (figma.currentPage.selection as unknown as GeometryMixin[]).forEach(
+        (node: GeometryMixin) => {
+          invertImages(node);
+        }
+      );
+    }
   };
 })();
