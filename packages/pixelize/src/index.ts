@@ -165,12 +165,13 @@ export const convert = async (
   return new ImageData(dataCopied, width, height);
 };
 
-// const drawNew = async (t: number) => {
-//   const newData = await convert("/cookie.png", t);
-//   const $canvas = document.createElement("canvas");
-//   document.body.appendChild($canvas);
-//   $canvas.width = newData.width;
-//   $canvas.height = newData.height;
-//   const ctx = $canvas.getContext("2d");
-//   ctx?.putImageData(newData, 0, 0);
-// };
+export const drawNew = async (t: number) => {
+  console.log("run");
+  const newData = await convert("/fallout4.jpg", t);
+  const $canvas = document.createElement("canvas");
+  document.body.appendChild($canvas);
+  $canvas.width = newData.width;
+  $canvas.height = newData.height;
+  const ctx = $canvas.getContext("2d");
+  ctx?.putImageData(newData, 0, 0);
+};
