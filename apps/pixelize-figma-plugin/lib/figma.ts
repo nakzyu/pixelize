@@ -1,4 +1,4 @@
-async function invertImages(node: GeometryMixin) {
+async function pixelizeImages(node: GeometryMixin) {
   const newFills = [];
   if (!node.fills) return;
   for (const paint of node.fills as Paint[]) {
@@ -36,7 +36,7 @@ export default (() => {
     } else {
       (figma.currentPage.selection as unknown as GeometryMixin[]).forEach(
         (node: GeometryMixin) => {
-          invertImages(node);
+          pixelizeImages(node);
         }
       );
     }
