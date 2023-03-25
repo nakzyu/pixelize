@@ -1,5 +1,5 @@
 # pixelize
-A monorepo consisting of a package that can convert images into pixel-art style. Multiple applications utilize this package.
+A monorepo contains a package that can convert images into pixel-art style, and apps that utilize that package.
 
 ## Apps
 
