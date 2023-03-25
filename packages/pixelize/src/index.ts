@@ -166,7 +166,6 @@ export const convert = async (
 };
 
 export const drawNew = async (t: number) => {
-  console.log("run");
   const newData = await convert("/fallout4.jpg", t);
   const $canvas = document.createElement("canvas");
   document.body.appendChild($canvas);

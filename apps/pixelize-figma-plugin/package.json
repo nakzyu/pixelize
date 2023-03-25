@@ -1,6 +1,8 @@
 {
-  "name": "pixelize-figma-plugin",
-  "version": "0.0.0",
+  "name": "pixelize-me",
+  "tagline": "Pixelize your designs with ease!",
+  "description": "Add a touch of pixel art to your designs with PixelizeMe! This plugin turns any image into a charming, pixelated version that's sure to delight.",
+  "version": "0.0.1",
   "scripts": {
     "dev": "vite build --watch --config vite.config.js",
     "test": "vitest",

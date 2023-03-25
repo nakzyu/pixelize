@@ -49,14 +49,8 @@ export default (() => {
     // trigger re-render on change
     window.parent.postMessage({ pluginMessage: {} }, "*");
     if ($p) {
-      $p.innerHTML = `block size:${(e.target as HTMLInputElement).value}`;
+      $p.innerHTML = `block size: ${(e.target as HTMLInputElement).value}`;
     }
-  });
-
-  const $revert = document.querySelector(".revert");
-
-  $revert?.addEventListener("click", () => {
-    window.parent.postMessage({ pluginMessage: { revert: true } }, "*");
   });
 
   window.onmessage = async (event) => {

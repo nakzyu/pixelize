@@ -1,6 +1,6 @@
 {
-  "name": "pixelize",
-  "id": "1205503346945146498",
+  "name": "Pixelize Me",
+  "id": "1221390971641242923",
   "api": "1.0.0",
   "editorType": ["figma"],
   "main": "dist/assets/main.js",

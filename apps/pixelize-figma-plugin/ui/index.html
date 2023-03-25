@@ -1,101 +1,105 @@
 <style>
   body {
+    margin: 0;
+    height: 100%;
+    font-family: "Inter";
+  }
+  .game {
     background-color: #2c2c2c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
-  input[type="range"] {
-    margin-left: 0 !important;
-    display: block;
-    margin: auto;
+
+  .game-canvas {
+    background-color: #fff;
+    border: 2px solid #000;
+  }
+
+  .game-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .game-controls h2 {
+    color: #fff;
+    font-size: 1.5rem;
+  }
+
+  .game-controls .p_size {
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  .game-controls input[type="range"] {
     -webkit-appearance: none;
-    position: relative;
-    overflow: hidden;
-    height: 40px;
+    appearance: none;
+    background-color: transparent;
+    height: 10px;
     width: 200px;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
-    border-radius: 0; /* iOS */
   }
 
-  .p_size {
-    color: #fff;
-  }
-
-  ::-webkit-slider-runnable-track {
+  .game-controls input[type="range"]::-webkit-slider-runnable-track {
     background: #ddd;
+    height: 10px;
   }
 
-  h2 {
-    color: #fff;
-  }
-
-  /*
-  * 1. Set to 0 width and remove border for a slider without a thumb
-  * 2. Shadow is negative the full width of the input and has a spread
-  *    of the width of the input.
-  */
-  ::-webkit-slider-thumb {
+  .game-controls input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 20px; /* 1 */
-    height: 40px;
-    background: #fff;
-    box-shadow: -200px 0 0 200px dodgerblue; /* 2 */
-    border: 2px solid #999; /* 1 */
-  }
-
-  ::-moz-range-track {
-    height: 40px;
-    background: #ddd;
-  }
-
-  ::-moz-range-thumb {
-    background: #fff;
-    height: 40px;
     width: 20px;
-    border: 3px solid #999;
-    border-radius: 0 !important;
-    box-shadow: -200px 0 0 200px dodgerblue;
-    box-sizing: border-box;
-  }
-
-  ::-ms-fill-lower {
-    background: dodgerblue;
-  }
-
-  ::-ms-thumb {
+    height: 20px;
     background: #fff;
-    border: 2px solid #999;
-    height: 40px;
-    width: 20px;
-    box-sizing: border-box;
+    border: 2px solid #000;
+    box-shadow: none;
+    margin-top: -5px;
   }
 
-  ::-ms-ticks-after {
-    display: none;
-  }
-
-  ::-ms-ticks-before {
-    display: none;
-  }
-
-  ::-ms-track {
+  .game-controls input[type="range"]::-moz-range-track {
     background: #ddd;
+    height: 10px;
+  }
+
+  .game-controls input[type="range"]::-moz-range-thumb {
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 50%;
+    box-shadow: none;
+    height: 20px;
+    width: 20px;
+  }
+
+  .game-controls input[type="range"]::-ms-track {
+    background: #ddd;
+    border-color: transparent;
     color: transparent;
-    height: 40px;
-    border: none;
+    height: 10px;
   }
 
-  ::-ms-tooltip {
-    display: none;
+  .game-controls input[type="range"]::-ms-fill-lower {
+    background: #ddd;
   }
 
-  .revert {
-    margin-top: 16px;
-    min-height: 20px;
+  .game-controls input[type="range"]::-ms-thumb {
+    background: #fff;
+    border: 2px solid #000;
+    height: 20px;
+    width: 20px;
+    margin-top: 0;
+    box-shadow: none;
   }
 </style>
-<div class="app">
-  <h2>Pixelize Image</h2>
-  <p class="p_size">block size:1</p>
-  <input id="slider" type="range" step="1" min="1" max="20" value="1" />
-  <button class="revert">REVERT</button>
+<div class="game app">
+  <div class="game-controls">
+    <h2>PixelizeMe</h2>
+    <p class="p_size">block size: 1</p>
+    <input id="slider" type="range" step="1" min="1" max="20" value="1" />
+  </div>
   <script src="index.ts" type="module"></script>
 </div>
